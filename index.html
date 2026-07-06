@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>宋貞瑩 | Jin-Ying Song - 個人履歷網站</title>
     <style>
-        /* 全域樣式與 W3Schools 風格底色 */
+        /* ==========================================
+           全域樣式與 W3Schools CV 經典配色
+           ========================================== */
         :root {
-            --primary-color: #1a365d;   /* 科技深藍 */
-            --secondary-color: #2b6cb0; /* 專案藍 */
-            --accent-color: #009688;    /* W3CSS 經典青綠色 */
-            --bg-main: #f1f1f1;         /* 範例網頁的經典淺灰背景 */
-            --text-dark: #2d3748;
-            --text-light: #757575;
+            --primary-bg: #f1f1f1;      /* 範例網頁整體的淺灰底色 */
             --white: #ffffff;
+            --text-dark: #000000;
+            --text-muted: #757575;
+            --accent-teal: #009688;     /* W3Schools 範例經典青綠色 */
             --shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
             --card-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
         }
@@ -22,90 +22,91 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+            font-family: "Roboto", sans-serif, "Segoe UI", Arial, "Noto Sans TC";
         }
 
         body {
-            background-color: var(--bg-main);
+            background-color: var(--primary-bg);
             color: var(--text-dark);
             font-size: 15px;
             line-height: 1.5;
         }
 
-        /* 網頁主容器 */
-        .container {
+        /* 網頁主容器：嚴格使用雙欄網格排版 */
+        .w3-content {
             max-width: 1400px;
             margin: 20px auto;
             padding: 0 15px;
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 2fr; /* 左欄：右欄 = 1：2 */
             gap: 20px;
         }
 
-        /* 通用卡片設計 */
-        .card {
+        /* 經典卡片樣式 */
+        .w3-card {
             background-color: var(--white);
-            border-radius: 4px;
             box-shadow: var(--card-shadow);
             margin-bottom: 20px;
-            overflow: hidden;
         }
 
         /* ==========================================
-           左側欄樣式 (Left Column)
+           左側欄 (Left Column) - 嚴格收納於單一白卡內
            ========================================== */
-        .left-column {
-            flex: 1;
-            max-width: 35%;
+        .left-column-card {
+            background-color: var(--white);
+            box-shadow: var(--card-shadow);
+            height: fit-content; /* 緊貼內容高度 */
         }
 
-        /* 個人名片頂部 */
-        .profile-header {
+        /* 左側頂部：大器深藍漸層（可替換為照片或維持純文字） */
+        .profile-display {
             position: relative;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
             color: var(--white);
-            padding: 40px 30px;
+            padding: 40px 20px;
             text-align: center;
         }
 
-        .profile-header h2 {
+        .profile-display h2 {
             font-size: 1.8rem;
-            margin-bottom: 5px;
+            font-weight: 400;
+            margin-bottom: 8px;
             letter-spacing: 1px;
         }
 
-        .profile-header p {
-            font-size: 1rem;
-            color: #e2e8f0;
-            font-weight: 300;
+        .profile-display p {
+            font-size: 0.95rem;
+            color: #cbd5e0;
         }
 
-        /* 個人資料詳細內容 */
-        .profile-body {
-            padding: 20px 30px;
+        /* 左側聯絡資訊與核心特質內容區 */
+        .profile-info-content {
+            padding: 16px 24px;
         }
 
-        .info-item {
-            margin-bottom: 15px;
+        .info-row {
+            margin: 12px 0;
             display: flex;
             align-items: center;
-            color: var(--text-dark);
+            font-size: 0.95rem;
+            color: #3a3a3a;
         }
 
-        /* 仿範例的文字前方點綴符號 */
-        .info-item::before {
-            content: "▹";
-            color: var(--accent-color);
-            font-weight: bold;
-            margin-right: 15px;
-            font-size: 1.2rem;
+        /* 仿範例經典小圖示點綴 */
+        .info-row::before {
+            content: "💡";
+            margin-right: 16px;
+            font-size: 1.1rem;
         }
+        .info-row.loc::before { content: "📍"; }
+        .info-row.mail::before { content: "✉"; }
 
-        .info-item a {
-            color: var(--secondary-color);
+        .info-row a {
+            color: var(--accent-teal);
             text-decoration: none;
         }
 
-        .info-item a:hover {
+        .info-row a:hover {
             text-decoration: underline;
         }
 
@@ -115,99 +116,90 @@
             margin: 20px 0;
         }
 
-        /* 核心特質與技能條 */
-        .section-sub-title {
+        /* 特質技能條樣式 */
+        .section-sub-heading {
             font-size: 1.2rem;
+            font-weight: 400;
             color: var(--text-dark);
             margin-bottom: 15px;
-            font-weight: bold;
             display: flex;
             align-items: center;
         }
 
-        .section-sub-title::before {
-            content: "★";
-            color: var(--accent-color);
-            margin-right: 10px;
+        .section-sub-heading::before {
+            content: "⭐";
+            margin-right: 12px;
+            font-size: 1rem;
         }
 
-        .skill-title {
+        .skill-name {
             font-size: 0.9rem;
-            color: var(--text-dark);
+            color: #555555;
             margin-bottom: 5px;
         }
 
-        .skill-bar-bg {
+        .w3-progress-container {
             background-color: #f1f1f1;
             border-radius: 16px;
-            height: 16px;
+            height: 18px;
             margin-bottom: 15px;
             overflow: hidden;
         }
 
-        .skill-bar-fill {
-            background-color: var(--accent-color);
+        .w3-progress-bar {
+            background-color: var(--accent-teal);
             height: 100%;
             color: var(--white);
             font-size: 0.75rem;
             text-align: center;
-            line-height: 16px;
+            line-height: 18px;
             border-radius: 16px;
             font-weight: bold;
         }
 
-        /* 未來預留的 3D 花玻璃區塊 */
-        .interactive-box {
-            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
-            padding: 40px 20px;
-            text-align: center;
-            color: var(--text-light);
-            font-size: 0.9rem;
-            border-radius: 4px;
-        }
-
         /* ==========================================
-           右側欄樣式 (Right Column)
+           右側欄 (Right Column) - 工作經歷與專案成就
            ========================================== */
         .right-column {
-            flex: 2;
-            max-width: 65%;
+            display: flex;
+            flex-direction: column;
         }
 
-        .main-section-title {
+        .main-title {
             font-size: 1.8rem;
-            color: #555555;
-            padding: 20px 30px 0 30px;
+            color: #616161;
+            font-weight: 400;
+            padding: 24px 24px 0 24px;
             display: flex;
             align-items: center;
         }
 
-        .main-section-title::before {
+        .main-title::before {
             content: "💼";
-            margin-right: 15px;
+            margin-right: 16px;
             font-size: 1.6rem;
         }
-
+        
         .project-title::before {
             content: "🏆";
         }
 
-        .experience-container {
-            padding: 10px 30px 30px 30px;
+        .entries-wrapper {
+            padding: 0 24px 24px 24px;
         }
 
-        .exp-item {
-            margin-top: 25px;
-            padding-bottom: 25px;
-            border-bottom: 1px solid #edf2f7;
+        .entry-item {
+            margin-top: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e0e0e0;
         }
 
-        .exp-item:last-child {
+        .entry-item:last-child {
             border-bottom: none;
             padding-bottom: 0;
         }
 
-        .exp-header {
+        .entry-header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
@@ -215,33 +207,33 @@
             margin-bottom: 8px;
         }
 
-        .exp-role {
-            font-size: 1.2rem;
+        .entry-role {
+            font-size: 1.15rem;
             font-weight: bold;
             color: #212121;
         }
 
-        .exp-company {
-            color: var(--text-dark);
-            font-weight: 500;
+        .entry-company {
+            font-size: 1rem;
+            color: #757575;
+            font-weight: 400;
         }
 
-        .exp-date {
-            color: var(--accent-color);
+        .entry-date {
+            color: var(--accent-teal);
             font-weight: 500;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            font-size: 0.9rem;
         }
 
-        .exp-date::before {
+        .entry-date::before {
             content: "📅";
-            margin-right: 5px;
-            font-size: 0.85rem;
+            margin-right: 6px;
         }
 
-        .current-badge {
-            background-color: var(--accent-color);
+        .badge-current {
+            background-color: var(--accent-teal);
             color: var(--white);
             padding: 2px 6px;
             border-radius: 4px;
@@ -250,22 +242,21 @@
             font-weight: bold;
         }
 
-        .exp-summary {
-            color: var(--text-dark);
+        .entry-summary {
+            color: #212121;
             font-weight: 500;
             margin-bottom: 10px;
             background-color: #f9f9f9;
             padding: 8px 12px;
-            border-left: 3px solid var(--accent-color);
+            border-left: 3px solid var(--accent-teal);
             font-size: 0.95rem;
         }
 
-        .exp-bullets {
+        .entry-bullets {
             list-style: none;
-            padding-left: 5px;
         }
 
-        .exp-bullets li {
+        .entry-bullets li {
             position: relative;
             padding-left: 20px;
             margin-bottom: 6px;
@@ -273,9 +264,9 @@
             color: #555555;
         }
 
-        .exp-bullets li::before {
+        .entry-bullets li::before {
             content: "•";
-            color: var(--accent-color);
+            color: var(--accent-teal);
             font-weight: bold;
             font-size: 1.2rem;
             position: absolute;
@@ -285,121 +276,105 @@
 
         /* 頁尾 */
         footer {
-            background-color: var(--primary-color);
+            background-color: #1a365d;
             color: var(--white);
             text-align: center;
-            padding: 25px;
+            padding: 24px;
             margin-top: 40px;
             font-size: 0.9rem;
         }
 
         /* ==========================================
-           RWD 響應式網頁設計 (手機板優化)
+           RWD 手機版自動融合排版
            ========================================== */
         @media (max-width: 992px) {
-            .container {
-                flex-direction: column;
+            .w3-content {
+                grid-template-columns: 1fr; /* 手機版自動切換為單欄垂直排列 */
                 margin: 10px auto;
-            }
-            .left-column, .right-column {
-                max-width: 100%;
-                width: 100%;
-            }
-            .exp-header {
-                flex-direction: column;
-                gap: 5px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <!-- 網頁主容器 -->
+    <div class="w3-content">
         
         <!-- ==========================================
-             左側欄位 (核心特質與個人名片)
+             左側欄位：完全收納於單一高質感白色大卡片
              ========================================== -->
-        <div class="left-column">
+        <div class="left-column-card">
             
-            <!-- 名片卡片 -->
-            <div class="card">
-                <div class="profile-header">
-                    <h2>宋貞瑩</h2>
-                    <p>專案助理 / 專案人員</p>
+            <!-- 頂部區塊 -->
+            <div class="profile-display">
+                <h2>宋貞瑩</h2>
+                <p>專案助理 / 專案人員</p>
+            </div>
+            
+            <!-- 資訊與特質區 -->
+            <div class="profile-info-content">
+                <div class="info-row">資訊傳播學系背景</div>
+                <div class="info-row loc">台南市東區</div>
+                <div class="info-row mail">
+                    <a href="mailto:j19980812@gmail.com">j19980812@gmail.com</a>
                 </div>
                 
-                <div class="profile-body">
-                    <div class="info-item">資訊傳播學系背景</div>
-                    <div class="info-item">台南市東區 (可通勤/遠端)</div>
-                    <div class="info-item">
-                        <a href="mailto:j19980812@gmail.com">j19980812@gmail.com</a>
-                    </div>
-                    
-                    <hr>
-                    
-                    <!-- 核心特質進度條 (比照範例的技能條設計，展現專案助理強項) -->
-                    <div class="section-sub-title">核心特質指標</div>
-                    
-                    <div class="skill-title">跨部門溝通與資源協調</div>
-                    <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" style="width: 95%;">95%</div>
-                    </div>
-                    
-                    <div class="skill-title">資訊審查與品質控管</div>
-                    <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" style="width: 90%;">90%</div>
-                    </div>
-                    
-                    <div class="skill-title">多工處理與動態危機應變</div>
-                    <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" style="width: 85%;">85%</div>
-                    </div>
-                    
-                    <div class="skill-title">流程優化與效率思維</div>
-                    <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" style="width: 90%;">90%</div>
-                    </div>
+                <hr>
+                
+                <!-- 核心特質指標條 -->
+                <h4 class="section-sub-heading">核心特質指標</h4>
+                
+                <div class="skill-name">跨部門溝通與資源協調</div>
+                <div class="w3-progress-container">
+                    <div class="w3-progress-bar" style="width: 95%;">95%</div>
+                </div>
+                
+                <div class="skill-name">資訊審查與品質控管</div>
+                <div class="w3-progress-container">
+                    <div class="w3-progress-bar" style="width: 90%;">90%</div>
+                </div>
+                
+                <div class="skill-name">多工處理與動態危機應變</div>
+                <div class="w3-progress-container">
+                    <div class="w3-progress-bar" style="width: 85%;">85%</div>
+                </div>
+                
+                <div class="skill-name">流程優化與效率思維</div>
+                <div class="w3-progress-container">
+                    <div class="w3-progress-bar" style="width: 90%;">90%</div>
+                </div>
 
-                    <div class="skill-title">持續與積極學習</div>
-                    <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" style="width: 95%;">95%</div>
-                    </div>
+                <div class="skill-name">持續與積極學習</div>
+                <div class="w3-progress-container">
+                    <div class="w3-progress-bar" style="width: 95%;">95%</div>
+                </div>
 
-                    <div class="skill-title">新科技適應與應用力</div>
-                    <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" style="width: 85%;">85%</div>
-                    </div>
+                <div class="skill-name">新科技適應與應用力</div>
+                <div class="w3-progress-container">
+                    <div class="w3-progress-bar" style="width: 85%;">85%</div>
                 </div>
             </div>
-
-            <!-- 未來 3D 作品展示卡片 -->
-            <div class="card interactive-box">
-                <strong>3D Interactive Glass Art</strong>
-                <p style="font-size: 0.8rem; margin-top: 8px; color: #718096;">
-                    [ 80年代花玻璃互動網頁開發中 ]<br>未來將在此處直接進行 3D 渲染嵌入
-                </p>
-            </div>
-
+            
         </div>
 
         <!-- ==========================================
-             右側欄位 (詳細經歷與專案成就)
+             右側欄位：詳細經歷與專案成就 (右側獨立兩張白卡)
              ========================================== -->
         <div class="right-column">
             
-            <!-- 工作經歷卡片 -->
-            <div class="card">
-                <h3 class="main-section-title">工作經歷</h3>
-                <div class="experience-container">
+            <!-- 工作經歷大卡片 -->
+            <div class="w3-card">
+                <h3 class="main-title">工作經歷</h3>
+                <div class="entries-wrapper">
                     
                     <!-- 經歷 1：成大醫院 -->
-                    <div class="exp-item">
-                        <div class="exp-header">
-                            <span class="exp-role">院聘行政人員 <span class="exp-company">/ 國立成功大學醫學院附設醫院</span></span>
-                            <span class="exp-date">2022/01 - 仍在職 <span class="current-badge">Current</span></span>
+                    <div class="entry-item">
+                        <div class="entry-header">
+                            <span class="entry-role">院聘行政人員 <span class="entry-company">/ 國立成功大學醫學院附設醫院</span></span>
+                            <span class="entry-date">2022/01 - 仍在職 <span class="badge-current">Current</span></span>
                         </div>
-                        <div class="exp-summary">負責高壓、多工環境下的行政流程支援、高敏感法定文件審查與跨單位協調調度。</div>
-                        <ul class="exp-bullets">
+                        <div class="entry-summary">負責高壓、多工環境下的行政流程支援、高敏感法定文件審查與跨單位協調調度。</div>
+                        <ul class="entry-bullets">
                             <li><strong>病房營運效率優化</strong>：協助控管 50 張病床優化排程，動態對接住院中心，有效提升週轉率。</li>
                             <li><strong>精密帳務與品管控管</strong>：每日審查醫療帳務及衛材紀錄，嚴格執行品質瑕疵通報，落實防範行政風險。</li>
                             <li><strong>資源調度與危機處理</strong>：管理全品項物資與採購規格對接，於供應短缺時靈活動態跨單位調度，確保作業不中斷。</li>
@@ -407,27 +382,27 @@
                     </div>
 
                     <!-- 經歷 2：樂學網 -->
-                    <div class="exp-item">
-                        <div class="exp-header">
-                            <span class="exp-role">排版編輯人員 (工讀) <span class="exp-company">/ 樂學網科技股份有限公司</span></span>
-                            <span class="exp-date">2020/07 - 2021/09</span>
+                    <div class="entry-item">
+                        <div class="entry-header">
+                            <span class="exp-role">排版編輯人員 (工讀) <span class="entry-company">/ 樂學網科技股份有限公司</span></span>
+                            <span class="entry-date">2020/07 - 2021/09</span>
                         </div>
-                        <div class="exp-summary">主導教材數位化編排專案之品質交付與流程管理，將傳統排版轉化為標準化、系統化的控管流程。</div>
-                        <ul class="exp-bullets">
+                        <div class="entry-summary">主導教材數位化編排專案之品質交付與流程管理，將傳統排版轉化為標準化、系統化的控管流程。</div>
+                        <ul class="entry-bullets">
                             <li><strong>規格標準化與品質交付 (QA)</strong>：運用進階樣式管理獨立負責 300 頁以上大型講義編排，建立標準排版規範提升正確率。</li>
                             <li><strong>四階品質檢核流程 (QC)</strong>：嚴格執行電子檔規格化、同儕互校、印刷核對與終審流程，達成教材零誤差出版。</li>
                             <li><strong>跨團隊溝通與效率優化</strong>：擔任跨部門溝通橋樑，活用 PowerPoint 母片技術精簡 30% 重複製程，確保案量高峰期準時交付。</li>
                         </ul>
                     </div>
 
-                    <!-- 經歷 3：崑山科技大學 -->
-                    <div class="exp-item">
-                        <div class="exp-header">
-                            <span class="exp-role">教授助理 - 數位典藏修復 <span class="exp-company">/ 崑山科技大學</span></span>
-                            <span class="exp-date">在學期間</span>
+                    <!-- 經歷 3：崑山科大助理 -->
+                    <div class="entry-item">
+                        <div class="entry-header">
+                            <span class="entry-role">教授助理 - 數位典藏修復 <span class="entry-company">/ 崑山科技大學</span></span>
+                            <span class="entry-date">在學期間</span>
                         </div>
-                        <div class="exp-summary">負責低解析度文獻之數位化還原與資產重建模擬專案，利用數位工具進行高精確度的技術流程整合。</div>
-                        <ul class="exp-bullets">
+                        <div class="entry-summary">負責低解析度文獻之數位化還原與資產重建模擬專案，利用數位工具進行高精確度的技術流程整合。</div>
+                        <ul class="entry-bullets">
                             <li><strong>高精確度數據審查</strong>：針對舊籍進行 1:1 數位化重建模擬、排版定位與文字轉譯，確保數位版本與實體原件 100% 一致。</li>
                             <li><strong>資產數位化與問題排除</strong>：熟練運用 Illustrator 進行特殊符號向量化技術，克服原始影像失真缺點，維護數位典藏品質。</li>
                             <li><strong>數位工具流程整合</strong>：靈活整合 OCR（光學字元辨識）與設計軟體優化文字擷取製程，縮短 30% 以上的資料轉換週期。</li>
@@ -437,17 +412,17 @@
                 </div>
             </div>
 
-            <!-- 專案成就卡片 -->
-            <div class="card">
-                <h3 class="main-section-title project-title">專案成就</h3>
-                <div class="experience-container">
-                    <div class="exp-item" style="border: none; padding-bottom: 0;">
-                        <div class="exp-header">
-                            <span class="exp-role">海洋生態保育 VR 虛擬實境互動遊戲開發 <span class="exp-company">/ 大學畢業專題</span></span>
-                            <span class="exp-date">成果作品</span>
+            <!-- 專案成就大卡片 -->
+            <div class="w3-card">
+                <h3 class="main-title project-title">專案成就</h3>
+                <div class="entries-wrapper">
+                    <div class="entry-item" style="border: none; padding-bottom: 0;">
+                        <div class="entry-header">
+                            <span class="entry-role">海洋生態保育 VR 虛擬實境互動遊戲開發 <span class="entry-company">/ 大學畢業專題</span></span>
+                            <span class="entry-date">成果作品</span>
                         </div>
-                        <div class="exp-summary">結合 3D 遊戲、故事動畫與 VR 技術，打造沈浸式數位科普產品，完成從需求到落地的完整生命週期。</div>
-                        <ul class="exp-bullets">
+                        <div class="entry-summary">結合 3D 遊戲、故事動畫與 VR 技術，打造沈浸式數位科普產品，完成從需求到落地的完整生命週期。</div>
+                        <ul class="entry-bullets">
                             <li><strong>3D模型與引擎導入</strong>：負責核心模型製作、UV材質、骨架綁定與動畫設定，成功導入 Unity 遊戲引擎進行流暢度測試與除錯。</li>
                             <li><strong>跨團隊進度控管</strong>：擔任組內技術、美宣與企劃溝通橋樑，落實時程追蹤，確保 3 大故事情境與 3 大關卡按時整合。</li>
                         </ul>
