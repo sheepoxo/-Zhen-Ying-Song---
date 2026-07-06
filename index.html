@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宋貞瑩 | Jin-Ying Song - 個人履歷網站</title>
+    <style>
+        /* 全域變數與字體設定 */
+        :root {
+            --primary-color: #1a365d; /* 科技深藍 */
+            --secondary-color: #2b6cb0; /* 專案藍 */
+            --accent-color: #319795; /* 數位青色 */
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --bg-light: #f7fafc;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        /* 導覽列 */
+        nav {
+            background-color: var(--white);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            margin-left: 1.5rem;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* 區塊通用設定 */
+        section {
+            padding: 5rem 2rem 3rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        /* 首頁 Banner */
+        #home {
+            padding-top: 8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .hero-text h1 {
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-text h2 {
+            font-size: 1.3rem;
+            color: var(--secondary-color);
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        /* 互動 placeholder，未來可放 3D 玻璃 */
+        .hero-interactive {
+            width: 320px;
+            height: 320px;
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 2rem;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* 個人特色標籤 */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid #bee3f8;
+        }
+
+        .tag.tech {
+            background-color: #e6fffa;
+            color: #234e52;
+            border-color: #b2f5ea;
+        }
+
+        /* 經歷卡片 */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border-left: 5px solid var(--secondary-color);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .job-title {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .company-name {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .date {
+            background-color: #edf2f7;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text-dark);
+        }
+
+        .card-summary {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            background-color: #f7fafc;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            border-left: 3px solid #cbd5e0;
+        }
+
+        .card-bullets {
+            list-style-type: none;
+        }
+
+        .card-bullets li {
+            position: relative;
+            padding-left: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .card-bullets li::before {
+            content: "•";
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        /* 頁尾與聯絡表單隱私防護 */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 5rem;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            margin-top: 1rem;
+            transition: background 0.3s;
+        }
+
+        .contact-btn:hover {
+            background-color: #2c7a7b;
+        }
+
+        /* 響應式手機網頁優化 */
+        @media (max-width: 768px) {
+            #home {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding-top: 6rem;
+            }
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .hero-interactive {
+                width: 100%;
+                height: 200px;
+            }
+            .card-header {
+                flex-direction: column;
+            }
+            .nav-links {
+                display: none; /* 簡化手機版選單 */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頂部導覽列 -->
+    <nav>
+        <div class="nav-logo">JIN-YING SONG</div>
+        <div class="nav-links">
+            <a href="#home">首頁</a>
+            <a href="#about">個人特色</a>
+            <a href="#experience">工作經歷</a>
+            <a href="#project">專案成就</a>
+        </div>
+    </nav>
+
+    <!-- 首頁區塊 -->
+    <section id="home">
+        <div class="hero-text">
+            <h1>宋貞瑩</h1>
+            <h2>專案助理 / 專案人員</h2>
+            <p>
+                具備資訊傳播背景與基礎網頁開發概念（HTML、CSS）。擅長在多工高壓的變動環境中落實進度控管、跨團隊需求轉譯與嚴謹的品質驗收。期望將細心、主動與跨界優化思維注入資訊系統專案團隊中。
+            </p>
+            <a href="mailto:j19980812@gmail.com" class="contact-btn">✉ 聯繫我 (專用信箱)</a>
+        </div>
+        <!-- 預留未來 3D 空間（目前為高質感 Placeholder） -->
+        <div class="hero-interactive">
+            <div>
+                <strong>3D Interactive Glass Art</strong><br>
+                <span style="font-size:0.8rem; display:block; margin-top:0.5rem;">[ 80年代花玻璃互動網頁開發中 ]</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 個人特色標籤區塊 -->
+    <section id="about">
+        <h3 class="section-title">核心特質標籤</h3>
+        <div class="tags-container">
+            <div class="tag">跨部門溝通與資源協調</div>
+            <div class="tag">資訊審查與品質控管</div>
+            <div class="tag">多工處理與動態危機應變</div>
+            <div class="tag">流程優化與效率思維</div>
+            <div class="tag">持續與積極學習</div>
+            <div class="tag tech">新科技適應與應用力</div>
+        </div>
+    </section>
+
+    <!-- 工作經歷區塊 -->
+    <section id="experience">
+        <h3 class="section-title">工作經歷</h3>
+        <div class="timeline">
+
+            <!-- 經歷：成大醫院 -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="job-title">院聘行政人員</span>
+                        <div class="company-name">國立成功大學醫學院附設醫院</div>
+                    </div>
+                    <span class="date">2022/01 - 仍在職</span>
+                </div>
+                <div class="card-summary">
+                    負責高壓、多工環境下的行政流程支援、高敏感法定文件審查與跨單位協調調度，維持單位營運效率與行政零風險。
+                </div>
+                <ul class="card-bullets">
+                    <li><strong>病房營運效率優化</strong>：協助控管 50 張病床優化排程，動態對接住院中心，有效提升週轉率。</li>
+                    <li><strong>精密帳務與品管控管</strong>：每日審查醫療帳務及衛材紀錄，嚴格執行品質瑕疵通報，落實防範行政風險。</li>
+                    <li><strong>資源調度與危機處理</strong>：管理全品項物資與採購規格對接，於供應短缺時靈活動態跨單位調度，確保作業不中斷。</li>
+                </ul>
+            </div>
+
+            <!-- 經歷：樂學網 -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="job-title">排版編輯人員 (工讀)</span>
+                        <div class="company-name">樂學網科技股份有限公司</div>
+                    </div>
+                    <span class="date">2020/07 - 2021/09</span>
+                </div>
+                <div class="card-summary">
+                    主導教材數位化編排專案之品質交付與流程管理，將傳統排版轉化為標準化、系統化的控管流程。
+                </div>
+                <ul class="card-bullets">
+                    <li><strong>規格標準化與品質交付 (QA)</strong>：運用進階樣式管理獨立負責 300 頁以上大型講義編排，建立標準排版規範提升正確率。</li>
+                    <li><strong>四階品質檢核流程 (QC)</strong>：嚴格執行電子檔規格化、同儕互校、印刷核對與終審流程，達成教材零誤差出版。</li>
+                    <li><strong>跨團隊溝通與效率優化</strong>：擔任跨部門溝通橋樑，活用 PowerPoint 母片技術精簡 30% 重複製程，確保案量高峰期準時交付。</li>
+                </ul>
+            </div>
+
+            <!-- 經歷：崑山助教 -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="job-title">教授助理 - 數位典藏修復 (兼職)</span>
+                        <div class="company-name">崑山科技大學</div>
+                    </div>
+                    <span class="date">在學期間</span>
+                </div>
+                <div class="card-summary">
+                    負責低解析度文獻之數位化還原與資產重建模擬專案，利用數位工具進行高精確度的技術流程整合。
+                </div>
+                <ul class="card-bullets">
+                    <li><strong>高精確度數據審查</strong>：針對舊籍進行 1:1 數位化重建模擬、排版定位與文字轉譯，確保數位版本與實體原件 100% 一致。</li>
+                    <li><strong>資產數位化與問題排除</strong>：熟練運用 Illustrator 進行特殊符號向量化技術，克服原始影像失真缺點，維護數位典藏品質。</li>
+                    <li><strong>數位工具流程整合</strong>：靈活整合 OCR（光學字元辨識）與設計軟體優化文字擷取製程，縮短 30% 以上的資料轉換週期。</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 專案成就區塊 -->
+    <section id="project">
+        <h3 class="section-title">專案成就</h3>
+        <div class="card" style="border-left-color: var(--accent-color);">
+            <div class="card-header">
+                <div>
+                    <span class="job-title">海洋生態保育 VR 虛擬實境互動遊戲開發</span>
+                    <div class="company-name">大學畢業專題</div>
+                </div>
+                <span class="date">成果作品</span>
+            </div>
+            <div class="card-summary">
+                結合 3D 遊戲、故事動畫與 VR 虛擬實境技術，打造高度沈浸式的數位科普體驗產品，完成從需求到落地的完整產品生命週期。
+            </div>
+            <ul class="card-bullets">
+                <li><strong>3D模型與引擎導入</strong>：負責核心模型製作、UV材質、骨架綁定與動畫設定，成功導入 Unity 遊戲引擎進行流暢度測試與除錯。</li>
+                <li><strong>跨團隊進度控管</strong>：擔任組內技術、美宣與企劃溝通橋樑，落實時程追蹤，確保 3 大故事情境與 3 大關卡按時整合。</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer>
+        <p>© 2026 宋貞瑩 Jin-Ying Song. All Rights Reserved.</p>
+        <p style="font-size: 0.85rem; color: #a0aec0; margin-top: 0.5rem;">本網站符合個資安全規範，未公開電話、住址等個人隱私資訊。</p>
+    </footer>
+
+</body>
+</html>
