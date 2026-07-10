@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成大創新數位內容研究中心_專案助理_面試提案</title>
+    <style>
+        :root {
+            --primary: #1e4d3a;    /* 科技莫蘭迪深綠 */
+            --accent: #5c8d75;     /* 質感湖水綠 */
+            --bg: #f9f8f3;         /* 大地溫暖米色 */
+            --card-bg: #ffffff;
+            --text: #2d3732;
+            --muted: #718096;
+            --line: #e2e8f0;
+            --alert-bg: #fee2e2;
+            --success-bg: #d1fae5;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; }
+        
+        body { 
+            background-color: #111; 
+            color: var(--text); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
+
+        /* 簡報單頁框架 (16:9 經典比例) */
+        .slide { 
+            background: var(--card-bg); 
+            width: 1100px; 
+            height: 620px; 
+            padding: 50px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            display: none; /* 由 JS 控制顯示 */
+            flex-direction: column; 
+            justify-content: space-between; 
+            position: relative;
+        }
+
+        .slide.active { display: flex; }
+
+        /* 頂部標題 */
+        .header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 2px solid var(--primary); 
+            padding-bottom: 15px; 
+            margin-bottom: 25px; 
+        }
+        .header h2 { color: var(--primary); font-size: 26px; font-weight: 700; }
+        .header .page-tag { background: var(--primary); color: #fff; padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; }
+
+        /* 底部資訊 */
+        .footer { 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 13px; 
+            color: var(--muted); 
+            border-top: 1px solid var(--line); 
+            padding-top: 15px; 
+            margin-top: auto; 
+        }
+
+        /* 快捷鍵提示 */
+        .nav-hint {
+            position: absolute;
+            bottom: 60px;
+            right: 50px;
+            font-size: 11px;
+            color: var(--muted);
+            background: var(--bg);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        /* 封面專屬樣式 */
+        .cover-content { text-align: center; margin: auto 0; }
+        .cover-content h1 { color: var(--primary); font-size: 44px; margin-bottom: 15px; letter-spacing: 1px; font-weight: 800; }
+        .cover-content h3 { color: var(--accent); font-size: 24px; font-weight: 500; margin-bottom: 45px; }
+        .cover-meta { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; 
+            max-width: 700px; 
+            margin: 0 auto; 
+            background: var(--bg); 
+            padding: 25px; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            border: 1px solid rgba(30,77,58,0.1);
+        }
+        .cover-meta div strong { color: var(--primary); display: inline-block; margin-bottom: 5px; }
+        
+        /* 網格與卡片設計 */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .card { background: var(--bg); padding: 22px; border-radius: 8px; border-left: 5px solid var(--accent); }
+        .card h4 { color: var(--primary); margin-bottom: 12px; font-size: 19px; }
+        .card p { font-size: 14px; line-height: 1.6; }
+        
+        /* 數據 Dashboard 樣式 */
+        .db-metric { text-align: center; background: var(--primary); color: #fff; padding: 30px 20px; border-radius: 8px; }
+        .db-metric .num { font-size: 52px; font-weight: bold; color: #f9f8f3; font-family: 'Georgia', sans-serif; }
+        .db-metric .label { font-size: 15px; margin-top: 8px; opacity: 0.9; font-weight: 500; }
+
+        /* 技能矩陣表格 */
+        .matrix-table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        .matrix-table th, .matrix-table td { padding: 14px; text-align: left; border-bottom: 1px solid var(--line); font-size: 15px; }
+        .matrix-table th { background: var(--primary); color: #fff; font-size: 15px; font-weight: 600; }
+        .tag-tool { background: #e2e8f0; padding: 3px 8px; border-radius: 4px; font-size: 13px; margin-right: 5px; color: var(--primary); font-weight: bold; }
+
+        /* 流程圖樣式 */
+        .flow-step { background: var(--bg); padding: 18px; border-radius: 6px; text-align: center; font-weight: 600; font-size: 15px; border: 1px solid var(--line); }
+        .flow-arrow { text-align: center; color: var(--accent); font-size: 22px; margin: 3px 0; font-weight: bold; }
+
+        /* 三期時間軸 */
+        .timeline { position: relative; padding-left: 35px; border-left: 2px solid var(--accent); margin-top: 10px; }
+        .timeline-item { position: relative; margin-bottom: 25px; }
+        .timeline-item::before { content: ""; position: absolute; left: -42px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--primary); border: 2px solid #fff; }
+        .timeline-item h4 { color: var(--primary); font-size: 17px; margin-bottom: 5px; }
+        .timeline-item p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <!-- PAGE 1: 封面提案 -->
+    <div class="slide active">
+        <div class="cover-content">
+            <h1>國立成功大學創新數位內容研究中心</h1>
+            <h3>專案助理 職位即戰力導入提案</h3>
+            <div class="cover-meta">
+                <div><strong>提案人</strong><br>宋貞瑩</div>
+                <div><strong>背景定位</strong><br>資訊傳播背景 × 高效跨域行政</div>
+                <div><strong>核心價值</strong><br>流程數位化與專案穩定後盾</div>
+            </div>
+        </div>
+        <div class="nav-hint">提示：按 空白鍵 或 左右方向鍵 可切換簡報頁面</div>
+        <div class="footer"><div>NCKU IDCRC Interview Proposal</div><div>1 / 6</div></div>
+    </div>
+
+    <!-- PAGE 2: 核心技能矩陣 -->
+    <div class="slide">
+        <div class="header">
+            <h2>核心技能矩陣 (Skill Matrix)</h2>
+            <div class="page-tag">職缺需求精準對齊</div>
+        </div>
+        <table class="matrix-table">
+            <thead>
+                <tr>
+                    <th style="width: 25%">中心職缺需求</th>
+                    <th style="width: 35%">我的對應核心技能</th>
+                    <th style="width: 40%">日常實務應用實例</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>專案計畫資料彙整與撰寫</strong></td>
+                    <td>大篇幅文書結構化、資訊整合</td>
+                    <td>在<span class="tag-tool">樂學網</span>主導 300+ 頁教科書教材編排，建立標準化排版檢核表。</td>
+                </tr>
+                <tr>
+                    <td><strong>生成式 AI 工具應用</strong></td>
+                    <td>ChatGPT 結構化 Prompt 落地</td>
+                    <td>利用 AI 作為「行政特助」，自動生成工作坊企劃大綱、公文與報告初稿潤飾。</td>
+                </tr>
+                <tr>
+                    <td><strong>掌控負責工作進度</strong></td>
+                    <td>Excel 進度追蹤、備援機制建立</td>
+                    <td>在<span class="tag-tool">成大醫院</span>建立物資請購到到貨的一條龍雲端追蹤表，維持零疏漏。</td>
+                </tr>
+                <tr>
+                    <td><strong>活動籌備與跨單位聯繫</strong></td>
+                    <td>跨部門資源調度、多方溝通</td>
+                    <td>負責醫護、後勤與外部廠商多方對接；曾任<span class="tag-tool">系學會美宣長</span>籌辦10+場大型活動。</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="footer"><div>專案助理 技能矩陣提案</div><div>2 / 6</div></div>
+    </div>
+
+    <!-- PAGE 3: 歷練實績 Dashboard -->
+    <div class="slide">
+        <div class="header">
+            <h2>歷練實績數據庫 (Experience Dashboard)</h2>
+            <div class="page-tag">成果量化呈現</div>
+        </div>
+        <div class="grid-3" style="margin-bottom: 25px;">
+            <div class="db-metric">
+                <div class="num">4Y 2M</div>
+                <div class="label">成大醫院高壓行政歷練</div>
+            </div>
+            <div class="db-metric" style="background: var(--accent);">
+                <div class="num">300+ 頁</div>
+                <div class="label">大型文件/教材高標準控管</div>
+            </div>
+            <div class="db-metric" style="background: var(--muted);">
+                <div class="num">0 件</div>
+                <div class="label">帳務物資與個資行政疏漏</div>
+            </div>
+        </div>
+        <div class="card">
+            <h4>💡 數據背後的即戰力解讀：</h4>
+            <p>具備長期留任大型機構的極高穩定度。習慣在複雜、敏感度高（如醫療個資、帳務）的環境下執行任務。擁有資訊傳播畢業背景，天然具備對「數位內容、排版與數據」的敏敏銳度，能無縫對接中心的研究專案成果彙整。</p>
+        </div>
+        <div class="footer"><div>歷練實績 Dashboard</div><div>3 / 6</div></div>
+    </div>
+
+    <!-- PAGE 4: 案例分析 — 流程優化實績 -->
+    <div class="slide">
+        <div class="header">
+            <h2>案例分析 (Case Study)：高頻表單行政減量優化</h2>
+            <div class="page-tag">智慧流程思維</div>
+        </div>
+        <div class="grid-2">
+            <div>
+                <h4 style="color: var(--primary); margin-bottom: 12px; font-size: 16px;">【傳統行政痛點】</h4>
+                <div class="flow-step" style="background: var(--alert-bg);">傳統高頻紙本表單</div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step" style="background: var(--alert-bg);">依賴工友送件 / 大量手工裝訂 (耗時)</div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step" style="background: var(--alert-bg);">面臨突發需求時容易斷貨 / 無法即時應變</div>
+            </div>
+            <div>
+                <h4 style="color: var(--accent); margin-bottom: 12px; font-size: 16px;">【我推動的數位優化方案】</h4>
+                <div class="flow-step" style="background: var(--success-bg);">全面數位化掃描建檔 (調閱無時差)</div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step" style="background: var(--success-bg);">動態庫存管理：定期「精準少份量」列印</div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step" style="background: var(--success-bg);">建立隨調隨印備援：短期需求暴增可 1 分鐘內緊急應對</div>
+            </div>
+        </div>
+        <div class="card" style="margin-top: 20px;">
+            <p><strong>📌 解決問題能力核心：</strong> 與中心所研究的「智慧流程自動化 (RPA)」理念不謀而合。我習慣在日常行政中主動找出冗餘環節，利用最基礎、最低成本的數位工具（掃描、雲端、Excel）進行輕量化改革，這正是計畫型專案助理極需的化繁為簡能力。</p>
+        </div>
+        <div class="footer"><div>案例分析：流程優化實績</div><div>4 / 6</div></div>
+    </div>
+
+    <!-- PAGE 5: 核心專案作品展示 -->
+    <div class="slide">
+        <div class="header">
+            <h2>核心專業文件與作品成果展示</h2>
+            <div class="page-tag">文書與設計雙軌輸出</div>
+        </div>
+        <div class="grid-3">
+            <div class="card">
+                <h4>📜 300+ 頁教材標準化</h4>
+                <p style="font-size: 13px; color: var(--muted); margin-bottom: 8px;">（樂學網實績）</p>
+                <p>利用 Word 進階樣式管理、層級設定與取代巨集，主導制定「標準化排版規範」，達成排版零誤差交付目標。</p>
+            </div>
+            <div class="card">
+                <h4>📊 醫療物資雲端控管表</h4>
+                <p style="font-size: 13px; color: var(--muted); margin-bottom: 8px;">（成大醫院實績）</p>
+                <p>拋棄複雜專案軟體，以客製化 Excel 搭配雲端共用系統，建立從請購、到貨到報銷的一條龍追蹤機制，管控日常高耗物資。</p>
+            </div>
+            <div class="card">
+                <h4>🎨 數位活動視覺素材</h4>
+                <p style="font-size: 13px; color: var(--muted); margin-bottom: 8px;">（資訊傳播/學會實績）</p>
+                <p>熟練操作 Illustrator 繪製教學圖示，並具備基礎網頁（HTML/CSS）概念，能協助中心進行研究成果的基礎網頁/圖文排版轉化。</p>
+            </div>
+        </div>
+        <div class="footer"><div>核心專案作品展示</div><div>5 / 6</div></div>
+    </div>
+
+    <!-- PAGE 6: 三期個人發展與貢獻目標 -->
+    <div class="slide">
+        <div class="header">
+            <h2>融入中心願景：個人三期發展與貢獻目標</h2>
+            <div class="page-tag">緊扣中心永續經營策略</div>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h4>🎯 短期目標：無縫接軌與日常行政精準化 (第 1 - 3 個月)</h4>
+                <p>全面熟悉中心現行專案與 PBL 計畫之行政流程。將個人過往累積的「零疏漏」文件核對與物資管理經驗導入日常。同時，嚴格遵守成大與中心嚴禁外部兼職之內規，全心投入各項主管交辦與後勤支援任務。</p>
+            </div>
+            <div class="timeline-item">
+                <h4>🎯 中期目標：AI 賦能行政與活動筹辦高質化 (第 4 - 12 個月)</h4>
+                <p>深度將生成式 AI（ChatGPT 等）作為行政特助，優化中心各項專案成果報告、結案公文的初稿潤飾效率。配合中心活動（如運動科技產學發表、PBL 工作坊）的時程，展現跨單位多方窗口溝通與後勤調度能力，確保活動高品質落地。</p>
+            </div>
+            <div class="timeline-item">
+                <h4>🎯 長期目標：數位內容轉化與協助中心永續經營 (1 年以上)</h4>
+                <p>配合中心「將產業研發成果商品化、推動青年創業」的終極經營目標，發揮個人的資訊傳播系背景，協助將中心豐碩的科研技術（如智慧羽球拍、智慧校園餐飲 APP）轉化為結構清晰、畫面精美的數位內容或簡報，協助中心提升對外產學推廣的影響力。</p>
+            </div>
+        </div>
+        <div class="footer"><div>三期個人發展與貢獻目標</div><div>6 / 6</div></div>
+    </div>
+
+    <script>
+        // 簡報切換邏輯 JS
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (index + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                showSlide(currentSlide + 1);
+                e.preventDefault();
+            } else if (e.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
